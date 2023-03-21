@@ -17,8 +17,11 @@
         <a class="nav-item nav-link" href="/urls">My URLs</a>
         <a class="nav-item nav-link" href="/urls/new">Create New URL</a>
         <form method="POST" action="/login" >
+          <h3>Logged in as: <%= username %>!</h3>
           <input type ='text' name="username" placeholder="Enter username"></input>
+          
           <button type ='submit'>login</button>
+          
         </form>
       </div>
     </div>

@@ -12,6 +12,10 @@
   </head>
 
   <body>
+    
+<h1><%= longURL %></h1>
+
+
     <%- include('partials/_header') %>
     <div class="card text-center">
       <div class="card-header"></div>
@@ -22,7 +26,16 @@
         </p>
       </div>
       <div class="card-footer text-muted"></div>
+    <form method="POST" action="/urls/<%= id %>/edit">
+      <div class="form-group">
+        <label for="longURL">Long URL:</label>
+        <input type="text" class="form-control" id="longURL" name="longURL" value="<%= longURL %>">
+      </div>
+      <button type="submit" class="btn btn-primary">Update</button>
+    </form>
     </div>
+    
+
     <!-- Bootstrap JS -->
     <script
       src="https://code.jquery.com/jquery-3.3.1.slim.min.js"

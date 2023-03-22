@@ -123,20 +123,21 @@ app.post("/urls/:id", (req, res) => {
 })
 
 app.post("/login", (req, res) => {
-  const { email } = req.body;
+  const { email, password } = req.body;
   const user = getUserByEmail(email);
 
-  if (user) {
+  if (!user) {
+    res.status(403).send("Invalid email address");
+  } else if (user.password !== password) {
+    res.status(403).send("Invalid password");
+  } else {
     res.cookie("user_id", user.id);
     res.redirect("/urls");
-  } else {
-    res.status(401).send("Invalid email or password");
   }
 });
-
 app.post("/logout", (req, res) => {
   res.clearCookie("user_id");
-  res.redirect("/urls");
+  res.redirect("/login");
 });
 
 app.get("/registration", (req, res) => {

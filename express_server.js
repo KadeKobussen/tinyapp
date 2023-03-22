@@ -124,7 +124,7 @@ app.post("/urls/:id", (req, res) => {
 
 app.post("/login", (req, res) => {
   const { email } = req.body;
-  const user = findUserByEmail(email);
+  const user = getUserByEmail(email);
 
   if (user) {
     res.cookie("user_id", user.id);
@@ -176,3 +176,7 @@ app.post("/registration", (req, res) => {
     // Redirect the user to the /urls page
     res.redirect('/urls');
 });
+
+app.get("/login", (req, res) => {
+  res.render('login');
+})

@@ -16,6 +16,14 @@ function generateRandomString() {
   return Math.random().toString(36).substring(2, 8);
 }
 
+function getUserByEmail(email) {
+  for (const userId in users) {
+    if (users[userId].email === email) {
+      return users[userId];
+    }
+  }
+  return null;
+}
 
 //user database
 const users = {
@@ -137,6 +145,17 @@ app.get("/registration", (req, res) => {
 
 app.post("/registration", (req, res) => {
   const { email, password } = req.body;
+
+  if (!email || !password) {
+    res.status(400).send('Email or password cannot be empty');
+    return;
+  }
+    // Check if the email already exists in the users object
+    const existingUser = getUserByEmail(email);
+  if (existingUser) {
+    res.status(400).send('This email is already in use.');
+    return;
+  }
   //generate random userID
   const userID = generateRandomString();
   //set new user in users object

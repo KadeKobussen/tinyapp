@@ -12,6 +12,20 @@ const urlDatabase = {
   "9sm5xK": "http://www.google.com"
 };
 
+//user database
+const users = {
+  userRandomID: {
+    id: "userRandomID",
+    email: "user@example.com",
+    password: "purple-monkey-dinosaur",
+  },
+  user2RandomID: {
+    id: "user2RandomID",
+    email: "user2@example.com",
+    password: "dishwasher-funk",
+  },
+};
+
 app.use(express.urlencoded({ extended: true }));
 
 app.get("/", (req, res) => {
@@ -105,4 +119,27 @@ app.post("/logout", (req, res) => {
 
 app.get("/registration", (req, res) => {
   res.render("registration");
+});
+
+app.post("/registration", (req, res) => {
+  const { email, password } = req.body;
+  //generate random userID
+  const userID = generateRandomString();
+  //set new user in users object
+  const newUser = {
+    id: userID,
+    'email': email,
+    'password': password
+  }; 
+
+ 
+
+  users[userID] = newUser;
+
+  console.log(users);
+  // Set a user_id cookie containing the user's newly generated ID
+    res.cookie('user_id', userID);
+
+    // Redirect the user to the /urls page
+    res.redirect('/urls');
 });

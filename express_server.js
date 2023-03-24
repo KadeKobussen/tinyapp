@@ -257,10 +257,10 @@ app.post("/urls/:id", (req, res) => {
 app.post("/login", (req, res) => {
   const { email, password } = req.body;
   const user = getUserByEmail(email);
-
+  const samePassword = bcrypt.compareSync(password, user.password);
   if (!user) {
     res.status(403).send("Invalid email address");
-  } else if (user.password !== bcrypt.hashSync(password, salt)) {
+  } else if (!samePassword) {
     res.status(403).send("Invalid password");
   } else {
     res.cookie("user_id", user.id);

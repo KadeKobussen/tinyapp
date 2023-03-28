@@ -23,18 +23,13 @@ app.use(
   })
 )
 
-/*app.get("/", (req, res) => {
-  const userId = req.cookies["user_id"];
-  const user = users[userId];
-  
-  console.log(userId)
-  if (!userId){
-    res.redirect("/login");
+app.get('/', (req, res) => {
+  if (req.session.user) {
+    res.redirect('/urls');
+  } else {
+    res.redirect('/login');
   }
-  else {
-    res.redirect("/urls");
-  }
-});*/
+});
 
 //starts web server that listens for incoming http requests
 app.listen(PORT, () => {
